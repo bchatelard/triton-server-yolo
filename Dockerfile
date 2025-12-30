@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/tritonserver:23.08-py3
+FROM nvcr.io/nvidia/tritonserver:25.12-py3
 
 COPY . /apps
 
