@@ -406,7 +406,7 @@ done
 
 trace_opts=""
 if $trace ; then
-  trace_opts=" --trace-config triton,file=/tmp/trace.json --trace-config triton,log-frequency=50 --trace-config rate=100 --trace-config level=TIMESTAMPS --trace-config count=100 "
+  trace_opts=" --trace-config triton,file=/tmp/trace.json --trace-config triton,log-frequency=50 --trace-config rate=1 --trace-config level=TIMESTAMPS --trace-config count=100 "
 fi
 
 # Start Triton Inference Server with the converted models
