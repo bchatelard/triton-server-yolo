@@ -39,6 +39,7 @@ usage() {
     echo "  - Use --max_batch_size to specify the maximum batch size for TensorRT engines."
     echo "  - Use --instance_group to specify the number of TensorRT engine instances loaded per model in the Triton Server."
     echo "  - Use --force Rebuild TensorRT engines even if they already exist."
+    echo "  - Use --trace To enable local tracing."
     echo "  - Use --reset_all Purge all existing TensorRT engines and their respective configurations."
 }
 
@@ -87,6 +88,7 @@ force_build=false
 reset_all=false
 model_mode=""
 model_names=()
+traces=false
 
 if [[ $# -eq 0 ]]; then
     usage
@@ -104,6 +106,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --force)
             force_build=true
+            shift
+            ;;
+        --traces)
+            traces=true
             shift
             ;;
         --models)
@@ -398,8 +404,13 @@ for model_name in "${model_names[@]}"; do
     echo "instance_group updated to $instance_group in $config_file"
 done
 
+trace_opts=""
+if $trace ; then
+  trace_opts=" --trace-config triton,file=/tmp/trace.json --trace-config triton,log-frequency=50 --trace-config rate=100 --trace-config level=TIMESTAMPS --trace-config count=100 "
+fi
+
 # Start Triton Inference Server with the converted models
 /opt/tritonserver/bin/tritonserver \
     --model-repository=/apps/models \
     --disable-auto-complete-config \
-    --log-verbose=0
+    --log-verbose=0 $traces_opts
