@@ -88,7 +88,7 @@ force_build=false
 reset_all=false
 model_mode=""
 model_names=()
-traces=false
+trace=false
 
 if [[ $# -eq 0 ]]; then
     usage
@@ -108,8 +108,8 @@ while [[ $# -gt 0 ]]; do
             force_build=true
             shift
             ;;
-        --traces)
-            traces=true
+        --trace)
+            trace=true
             shift
             ;;
         --models)
@@ -413,4 +413,4 @@ fi
 /opt/tritonserver/bin/tritonserver \
     --model-repository=/apps/models \
     --disable-auto-complete-config \
-    --log-verbose=0 $traces_opts
+    --log-verbose=0 $trace_opts
