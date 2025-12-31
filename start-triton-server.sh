@@ -411,6 +411,6 @@ fi
 
 # Start Triton Inference Server with the converted models
 /opt/tritonserver/bin/tritonserver \
-    --model-repository=/apps/models \
+    --model-repository=/apps/models --model-control-mode=poll \
     --disable-auto-complete-config \
     --log-verbose=0 $trace_opts
